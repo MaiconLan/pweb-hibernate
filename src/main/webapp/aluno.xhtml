@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<ui:composition template="template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formTableAluno">
+			<p:dataTable value="#{alunoController.alunos}" var="aluno"
+				emptyMessage="Foram encontrados 0 registros" reflow="true"
+				paginator="true" rows="10">
+
+				<f:facet name="header">
+					<p:commandButton value="Novo"
+						onclick="PF('modalCadastroAluno').show();" />
+				</f:facet>
+
+				<p:column headerText="Nome" sortBy="#{aluno.idAluno}">
+					<p:outputLabel value="#{aluno.idAluno}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{aluno.nome}">
+					<p:outputLabel value="#{aluno.nome}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{aluno.nome}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+				</p:column>
+
+				<p:column headerText="Situação">
+					<p:outputLabel value="#{aluno.genero}" />
+				</p:column>
+
+				<p:column headerText="Rua">
+					<p:outputLabel value="#{aluno.endereco.rua}" />
+				</p:column>
+
+				<p:column headerText="Número">
+					<p:outputLabel value="#{aluno.endereco.numero}" />
+				</p:column>
+
+				<p:column headerText="Bairro">
+					<p:outputLabel value="#{aluno.endereco.bairro}" />
+				</p:column>
+
+				<p:column headerText="Cidade">
+					<p:outputLabel value="#{aluno.endereco.cidade}" />
+				</p:column>
+
+				<p:column headerText="UF">
+					<p:outputLabel value="#{aluno.endereco.uf}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<p:outputLabel value="#{aluno.email}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<p:outputLabel value="#{aluno.telefone}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{alunoController.editar}" update="formTableAluno">
+						<f:attribute name="alunoSelecionado" value="#{aluno}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{alunoController.excluir}"
+						update="formTableAluno">
+
+						<p:confirm header="Confirmação" message="Excluir Aluno?"
+							icon="ui-icon-alert" />
+						<f:attribute name="alunoExcluido" value="#{aluno}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:outputLabel
+						value="Foram encontrados #{alunoController.alunos.size()} registros." />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<h:form id="formModalCadastroAluno">
+			<p:dialog modal="true" widgetVar="modalCadastroAluno"
+				id="modalCadastroAluno" header="Cadastrar Aluno" showEffect="fade"
+				hideEffect="fade">
+				<ui:insert name="modal-cadastro-aluno.xhtml" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

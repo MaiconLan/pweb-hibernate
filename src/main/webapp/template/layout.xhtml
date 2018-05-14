@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>Aula PWEB</title>
+	<meta charset="UTF-8" />
+	<h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+<h:body>
+	<div id="cabecalho">
+		<ui:insert name="cabecalho">
+			<h:form styleClass="form-cabecalho">
+				<h:link outcome="template/layout">
+					<h:graphicImage library="img" name="icon-escola.png" width="50" />
+				</h:link>
+
+				<p:outputLabel styleClass="titulo" value="Faça parte da escola SIAC" />
+			</h:form>
+		</ui:insert>
+	</div>
+
+
+	<p:layout styleClass="layout">
+		<p:layoutUnit position="west" resizable="true">
+
+			<h:form>
+				<p:slideMenu styleClass="menu" backLabel="Voltar">
+					<p:submenu label="Cadastros" icon="fa fa-fw fa-edit">
+						<p:menuitem value="Aluno" icon="fa fa-fw fas fa-user"
+							url="/aluno.xhtml" />
+						<p:menuitem value="Disciplina" url="/disciplina.xhtml" icon="fa fa-fw far fa-id-card" />
+					</p:submenu>
+				</p:slideMenu>
+			</h:form>
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<div id="conteudo">
+				<ui:insert name="conteudo">
+
+				</ui:insert>
+			</div>
+		</p:layoutUnit>
+
+		<!-- 		<p:layoutUnit position="south" resizable="true"> -->
+		<!-- 			<div id="rodape"> -->
+		<!-- 				<ui:insert name="rodape"> -->
+		<!-- 					<ui:include src="rodape.xhtml" /> -->
+		<!-- 				</ui:insert> -->
+		<!-- 			</div> -->
+		<!-- 		</p:layoutUnit> -->
+	</p:layout>
+
+
+</h:body>
+</html>

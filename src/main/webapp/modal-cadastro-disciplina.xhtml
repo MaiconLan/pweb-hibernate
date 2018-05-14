@@ -1,0 +1,27 @@
+<ui:composition template="template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="formDisciplina">
+		<p:growl autoUpdate="true" />
+		<p:panel id="panelDisciplina" header="Disciplina">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome"
+					value="#{disciplinaController.disciplina.nome}" required="true"
+					requiredMessage="Campo nome obrigatório" />
+
+				<p:outputLabel value="Semestre" for="semestre" />
+				<p:calendar value="#{disciplinaController.disciplina.semestre}" />
+
+				<p:commandButton value="Salvar"
+					styleClass="btn-block btn-success btn-flat"
+					actionListener="#{disciplinaController.salvar}"
+					update="formTableDisciplina formDisciplina" />
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+</ui:composition>

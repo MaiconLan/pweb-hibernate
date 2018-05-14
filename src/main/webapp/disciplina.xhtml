@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<ui:composition template="template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formTableDisciplina">
+			<p:dataTable value="#{disciplinaController.disciplinas}"
+				var="disciplina" emptyMessage="Foram encontrados 0 registros"
+				reflow="true" paginator="true" rows="10">
+
+				<f:facet name="header">
+					<p:commandButton value="Novo"
+						onclick="PF('modalCadastroDisciplina').show();" />
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{disciplina.idDisciplina}">
+					<p:outputLabel value="#{disciplina.idDisciplina}" />
+				</p:column>
+
+				<p:column headerText="Nome" sortBy="#{disciplina.nome}">
+					<p:outputLabel value="#{disciplina.nome}" />
+				</p:column>
+
+				<p:column headerText="Semestre">
+					<p:outputLabel value="#{disciplina.semestre}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{disciplinaController.editar}"
+						update="formTableDisciplina">
+						<f:attribute name="disciplinaSelecionada" value="#{disciplina}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{disciplinaController.excluir}"
+						update="formTableDisciplina">
+
+						<p:confirm header="Confirmação" message="Excluir Disciplina?"
+							icon="ui-icon-alert" />
+						<f:attribute name="disciplinaExcluida" value="#{disciplina}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:outputLabel
+						value="Foram encontrados #{disciplinaController.disciplinas.size()} registros." />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+
+		<h:form id="formModalCadastroDisciplina">
+			<p:dialog modal="true" widgetVar="modalCadastroDisciplina"
+				id="modalCadastroDisciplina" header="Cadastrar Disciplina"
+				showEffect="fade" hideEffect="fade">
+				<ui:insert name="modal-cadastro-disciplina.xhtml" />
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
