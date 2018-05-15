@@ -2,16 +2,27 @@ package model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "disciplina")
 public class Disciplina implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_disciplina")
 	private Long idDisciplina;
+
 	private String nome;
-	private Integer semestre;
+
+	private String semestre;
 
 	public Long getIdDisciplina() {
 		return idDisciplina;
@@ -29,11 +40,11 @@ public class Disciplina implements Serializable {
 		this.nome = nome;
 	}
 
-	public Integer getSemestre() {
+	public String getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(Integer semestre) {
+	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}
 

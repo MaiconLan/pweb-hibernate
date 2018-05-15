@@ -7,20 +7,32 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 	<ui:define name="conteudo">
+		<h:form id="formDisciplina">
+			<p:growl autoUpdate="true" />
+			<p:panel id="panelDisciplina" header="Disciplina">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome"
+						value="#{disciplinaController.disciplina.nome}" required="true"
+						requiredMessage="Campo nome obrigatório" />
+
+					<p:outputLabel value="Semestre" for="semestre" />
+					<p:inputText id="semestre"
+						value="#{disciplinaController.disciplina.semestre}"
+						required="true" requiredMessage="Campo semestre obrigatório" />
+
+					<p:commandButton value="Salvar"
+						styleClass="btn-block btn-success btn-flat"
+						actionListener="#{disciplinaController.salvar}"
+						update="formTableDisciplina formDisciplina" />
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
 
 		<h:form id="formTableDisciplina">
 			<p:dataTable value="#{disciplinaController.disciplinas}"
 				var="disciplina" emptyMessage="Foram encontrados 0 registros"
 				reflow="true" paginator="true" rows="10">
-
-				<f:facet name="header">
-					<p:commandButton value="Novo"
-						onclick="PF('modalCadastroDisciplina').show();" />
-				</f:facet>
-
-				<p:column headerText="Código" sortBy="#{disciplina.idDisciplina}">
-					<p:outputLabel value="#{disciplina.idDisciplina}" />
-				</p:column>
 
 				<p:column headerText="Nome" sortBy="#{disciplina.nome}">
 					<p:outputLabel value="#{disciplina.nome}" />
@@ -53,14 +65,6 @@
 						value="Foram encontrados #{disciplinaController.disciplinas.size()} registros." />
 				</f:facet>
 			</p:dataTable>
-		</h:form>
-
-		<h:form id="formModalCadastroDisciplina">
-			<p:dialog modal="true" widgetVar="modalCadastroDisciplina"
-				id="modalCadastroDisciplina" header="Cadastrar Disciplina"
-				showEffect="fade" hideEffect="fade">
-				<ui:insert name="modal-cadastro-disciplina.xhtml" />
-			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

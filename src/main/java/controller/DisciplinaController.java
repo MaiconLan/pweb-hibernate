@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import business.DisciplinaBusiness;
 import model.Disciplina;
 
 @ViewScoped
@@ -19,11 +20,14 @@ public class DisciplinaController implements Serializable {
 
 	private Disciplina disciplina;
 
+	private DisciplinaBusiness disciplinaBusiness = new DisciplinaBusiness();
+
 	private List<Disciplina> disciplinas = new ArrayList<>();
 
 	@PostConstruct
 	public void initialize() {
 		novaDisciplina();
+		recarregarDisciplinas();
 	}
 
 	public void editar(ActionEvent event) {
@@ -32,14 +36,17 @@ public class DisciplinaController implements Serializable {
 
 	public void excluir(ActionEvent event) {
 		disciplinas.remove((Disciplina) event.getComponent().getAttributes().get("disciplinaExcluidoa"));
+		recarregarDisciplinas();
 	}
 
 	public void salvar() {
-		if (disciplinas.contains(disciplina)) {
-			disciplinas.remove(disciplina);
-		}
-		disciplinas.add(disciplina);
+		disciplinaBusiness.salvar(disciplina);
 		novaDisciplina();
+		recarregarDisciplinas();
+	}
+	
+	public void recarregarDisciplinas() {
+		disciplinas = disciplinaBusiness.listar();
 	}
 
 	public void novaDisciplina() {
