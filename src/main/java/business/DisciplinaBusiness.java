@@ -2,12 +2,12 @@ package business;
 
 import java.util.List;
 
-import dao.DisciplinaDAO;
+import dao.DisciplinaDao;
 import model.Disciplina;
 
 public class DisciplinaBusiness {
 
-	private DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+	private DisciplinaDao disciplinaDAO = new DisciplinaDao();
 
 	public void salvar(Disciplina disciplina) {
 		disciplinaDAO.save(disciplina);

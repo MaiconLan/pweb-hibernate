@@ -1,21 +1,41 @@
 package model;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "aluno")
 public class Aluno implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_aluno")
 	private Long idAluno;
+
 	private String nome;
-	private Calendar nascimento;
+
+	@Temporal(value = TemporalType.DATE)
+	private Date nascimento;
+
 	private String genero;
-	private Endereco endereco;
-	private String email;
-	private String telefone;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_contato", nullable = false)
+	private Contato contato = new Contato();
 
 	public Long getIdAluno() {
 		return idAluno;
@@ -25,11 +45,11 @@ public class Aluno implements Serializable {
 		this.idAluno = idAluno;
 	}
 
-	public Calendar getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(Calendar nascimento) {
+	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
 	}
 
@@ -41,28 +61,12 @@ public class Aluno implements Serializable {
 		this.genero = genero;
 	}
 
-	public Endereco getEndereco() {
-		return endereco;
+	public Contato getContato() {
+		return contato;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setContato(Contato contato) {
+		this.contato = contato;
 	}
 
 	public String getNome() {

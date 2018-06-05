@@ -11,64 +11,87 @@
 			<p:growl autoUpdate="true" />
 			<p:panel id="panelAluno" header="Aluno">
 				<p:panelGrid columns="2">
-					<p:outputLabel value="Nome:" for="nome" />
-					<p:inputText id="nome" value="#{alunoController.aluno.nome}"
-						required="true" requiredMessage="Campo nome obrigatório" />
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Nome" for="nome" />
+						<p:inputText id="nome" value="#{alunoController.aluno.nome}"
+							required="true" requiredMessage="Campo nome obrigatório" />
 
-					<p:outputLabel for="nascimento" value="Nascimento" />
-					<p:calendar id="nascimento"
-						value="#{alunoController.aluno.nascimento}" />
+						<p:outputLabel for="nascimento" value="Nascimento" />
+						<p:calendar id="nascimento" mask="true" pattern="yy/MM/yyyy"
+							value="#{alunoController.aluno.nascimento}" />
 
-					<p:outputLabel for="genero" value="Gênero" />
-					<p:selectBooleanButton id="genero" offLabel="M" onLabel="F"
-						required="true" requiredMessage="Campo gênero obrigatório"
-						value="#{alunoController.aluno.genero}" />
+						<p:outputLabel for="genero" value="Gênero" />
+						<p:selectOneMenu id="genero"
+							value="#{alunoController.aluno.genero}" required="true"
+							requiredMessage="Campo gênero obrigatório.">
+							<f:selectItem itemLabel="Selecione um gênero" />
+							<f:selectItem itemLabel="Feminino" itemValue="F" />
+							<f:selectItem itemLabel="Masculino" itemValue="M" />
+						</p:selectOneMenu>
 
-					<p:outputLabel for="rua" value="Rua" />
-					<p:inputText id="rua" value="#{alunoController.aluno.endereco.rua}"
-						requiredMessage="Campo endereço obrigatório">
-					</p:inputText>
+						<p:outputLabel for="contato" value="Contato" />
+						<p:outputLabel id="contato"
+							value="#{alunoController.aluno.contato}" />
 
-					<p:outputLabel for="numero" value="Número" />
-					<p:inputText id="numero"
-						value="#{alunoController.aluno.endereco.numero}"
-						requiredMessage="Campo número obrigatório">
-					</p:inputText>
+						<p:commandButton value="Salvar"
+							styleClass="btn-block btn-success btn-flat"
+							actionListener="#{alunoController.salvar}"
+							update="formTableAluno formCadastroAluno" />
+					</p:panelGrid>
 
-					<p:outputLabel for="bairro" value="Bairro" />
-					<p:inputText id="bairro"
-						value="#{alunoController.aluno.endereco.bairro}"
-						requiredMessage="Campo bairro obrigatório">
-					</p:inputText>
+					<p:dataTable value="#{alunoController.contatos}" var="contato"
+						emptyMessage="Foram encontrados 0 registros" reflow="true"
+						paginator="true" rows="10">
 
-					<p:outputLabel for="cidade" value="Cidade" />
-					<p:inputText id="cidade"
-						value="#{alunoController.aluno.endereco.cidade}"
-						requiredMessage="Campo cidade obrigatório">
-					</p:inputText>
+						<p:column headerText="Código" sortBy="#{contato.idContato}">
+							<p:outputLabel value="#{contato.idContato}" />
+						</p:column>
 
-					<p:outputLabel for="uf" value="UF" />
-					<p:selectOneMenu value="#{alunoController.aluno.endereco.uf}"
-						id="uf" required="true"
-						requiredMessage="Campo UF de seleção obrigatória">
-						<f:selectItem itemLabel="Selecione" />
-						<f:selectItems value="#{alunoController.ufs}" var="uf"
-							itemValue="#{uf}" itemLabel="#{uf}" />
-					</p:selectOneMenu>
+						<p:column headerText="Rua" sortBy="#{contato.rua}">
+							<p:outputLabel value="#{contato.rua}" />
+						</p:column>
 
-					<p:outputLabel for="email" value="Email" />
-					<p:inputText id="email" value="#{alunoController.aluno.email}"
-						required="true" requiredMessage="Campo e-mail obrigatório">
-					</p:inputText>
+						<p:column headerText="Número">
+							<p:outputLabel value="#{contato.numero}" />
+						</p:column>
 
-					<p:outputLabel for="telefone" value="Telefone" />
-					<p:inputText id="telefone"
-						value="#{alunoController.aluno.telefone}" />
+						<p:column headerText="Bairro">
+							<p:outputLabel value="#{contato.bairro}" />
+						</p:column>
 
-					<p:commandButton value="Salvar"
-						styleClass="btn-block btn-success btn-flat"
-						actionListener="#{alunoController.salvar}"
-						update="formTableAluno formCadastroAluno" />
+						<p:column headerText="Cidade">
+							<p:outputLabel value="#{contato.cidade}" />
+						</p:column>
+
+						<p:column headerText="Uf">
+							<p:outputLabel value="#{contato.uf}" />
+						</p:column>
+
+						<p:column headerText="E-mail">
+							<p:outputLabel value="#{contato.email}" />
+						</p:column>
+
+						<p:column headerText="Telefone">
+							<p:outputLabel value="#{contato.telefone}" />
+						</p:column>
+
+						<p:column headerText="Número">
+							<p:outputLabel value="#{contato.numero}" />
+						</p:column>
+
+						<p:column headerText="Ações">
+							<p:commandButton icon="ui-icon-pencil"
+								actionListener="#{alunoController.selecionarContato}"
+								immediate="true" update="formCadastroAluno:contato">
+								<f:attribute name="contatoSelecionado" value="#{contato}" />
+							</p:commandButton>
+						</p:column>
+
+						<f:facet name="footer">
+							<p:outputLabel
+								value="Foram encontrados #{alunoController.contatos.size()} registros." />
+						</f:facet>
+					</p:dataTable>
 				</p:panelGrid>
 			</p:panel>
 		</h:form>
@@ -78,12 +101,7 @@
 				emptyMessage="Foram encontrados 0 registros" reflow="true"
 				paginator="true" rows="10">
 
-				<f:facet name="header">
-					<p:commandButton value="Novo"
-						onclick="PF('modalCadastroAluno').show();" />
-				</f:facet>
-
-				<p:column headerText="Nome" sortBy="#{aluno.idAluno}">
+				<p:column headerText="Código" sortBy="#{aluno.idAluno}">
 					<p:outputLabel value="#{aluno.idAluno}" />
 				</p:column>
 
@@ -91,56 +109,33 @@
 					<p:outputLabel value="#{aluno.nome}" />
 				</p:column>
 
-				<p:column headerText="Nome">
-					<p:outputLabel value="#{aluno.nome}">
+				<p:column headerText="Data de Nascimento">
+					<p:outputLabel value="#{aluno.nascimento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</p:outputLabel>
 				</p:column>
 
-				<p:column headerText="Situação">
+				<p:column headerText="Gênero">
 					<p:outputLabel value="#{aluno.genero}" />
 				</p:column>
 
-				<p:column headerText="Rua">
-					<p:outputLabel value="#{aluno.endereco.rua}" />
-				</p:column>
-
-				<p:column headerText="Número">
-					<p:outputLabel value="#{aluno.endereco.numero}" />
-				</p:column>
-
-				<p:column headerText="Bairro">
-					<p:outputLabel value="#{aluno.endereco.bairro}" />
-				</p:column>
-
-				<p:column headerText="Cidade">
-					<p:outputLabel value="#{aluno.endereco.cidade}" />
-				</p:column>
-
-				<p:column headerText="UF">
-					<p:outputLabel value="#{aluno.endereco.uf}" />
-				</p:column>
-
-				<p:column headerText="E-mail">
-					<p:outputLabel value="#{aluno.email}" />
-				</p:column>
-
-				<p:column headerText="Telefone">
-					<p:outputLabel value="#{aluno.telefone}" />
+				<p:column headerText="Contato">
+					<p:outputLabel value="#{aluno.contato}" />
 				</p:column>
 
 				<p:column headerText="Ações">
 					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{alunoController.editar}" update="formTableAluno">
+						actionListener="#{alunoController.editar}"
+						update="formCadastroAluno">
 						<f:attribute name="alunoSelecionado" value="#{aluno}" />
 					</p:commandButton>
 
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{alunoController.excluir}"
-						update="formTableAluno">
+						update="formTableAluno formCadastroAluno">
 
 						<p:confirm header="Confirmação" message="Excluir Aluno?"
-							icon="ui-icon-alert" />
+							actionListener="#{alunoController.excluir}" icon="ui-icon-alert" />
 						<f:attribute name="alunoExcluido" value="#{aluno}" />
 					</p:commandButton>
 				</p:column>
@@ -152,5 +147,17 @@
 			</p:dataTable>
 		</h:form>
 
+
+		<h:form id="modalExcluir">
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				severity="alert">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes btn-block btn-success btn-flat"
+					icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no btn-block btn-warning btn-flat"
+					icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
 	</ui:define>
 </ui:composition>

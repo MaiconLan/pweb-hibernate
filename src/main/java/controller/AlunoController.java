@@ -10,8 +10,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import business.AlunoBusiness;
+import business.ContatoBusiness;
 import model.Aluno;
-import model.Endereco;
+import model.Contato;
 
 @ViewScoped
 @ManagedBean(name = "alunoController")
@@ -23,65 +24,49 @@ public class AlunoController implements Serializable {
 
 	private List<Aluno> alunos = new ArrayList<>();
 
-	private List<String> ufs = new ArrayList<>();
+	private List<Contato> contatos = new ArrayList<>();
 
-	private AlunoBusiness alunoBusiness;
+	private AlunoBusiness alunoBusiness = new AlunoBusiness();
+
+	private ContatoBusiness contatoBusiness = new ContatoBusiness();
 
 	@PostConstruct
 	public void initialize() {
-		popuplarUfs();
 		novoAluno();
-	}
-
-	private void popuplarUfs() {
-		ufs.add("AC");
-		ufs.add("AL");
-		ufs.add("AM");
-		ufs.add("AP");
-		ufs.add("BA");
-		ufs.add("CE");
-		ufs.add("DF");
-		ufs.add("ES");
-		ufs.add("GO");
-		ufs.add("MA");
-		ufs.add("MG");
-		ufs.add("MS");
-		ufs.add("MT");
-		ufs.add("PA");
-		ufs.add("PB");
-		ufs.add("PE");
-		ufs.add("PI");
-		ufs.add("PR");
-		ufs.add("RJ");
-		ufs.add("RN");
-		ufs.add("RO");
-		ufs.add("RR");
-		ufs.add("RS");
-		ufs.add("SC");
-		ufs.add("SE");
-		ufs.add("SP");
-		ufs.add("TO");
+		listarAlunos();
+		listarContatos();
 	}
 
 	public void editar(ActionEvent event) {
 		setAluno((Aluno) event.getComponent().getAttributes().get("alunoSelecionado"));
 	}
 
+	public void selecionarContato(ActionEvent event) {
+		aluno.setContato((Contato) event.getComponent().getAttributes().get("contatoSelecionado"));
+	}
+
 	public void excluir(ActionEvent event) {
-		alunos.remove((Aluno) event.getComponent().getAttributes().get("alunoExcluido"));
+		Aluno aluno = (Aluno) event.getComponent().getAttributes().get("alunoExcluido");
+		alunoBusiness.excluir(aluno);
+		listarAlunos();
 	}
 
 	public void salvar() {
-		if (alunos.contains(aluno)) {
-			alunos.remove(aluno);
-		}
-		alunos.add(aluno);
+		alunoBusiness.salvar(aluno);
+		listarAlunos();
 		novoAluno();
+	}
+
+	public void listarAlunos() {
+		alunos = alunoBusiness.listar();
+	}
+
+	public void listarContatos() {
+		contatos = contatoBusiness.listar();
 	}
 
 	public void novoAluno() {
 		aluno = new Aluno();
-		aluno.setEndereco(new Endereco());
 	}
 
 	public Aluno getAluno() {
@@ -100,12 +85,12 @@ public class AlunoController implements Serializable {
 		this.alunos = alunos;
 	}
 
-	public List<String> getUfs() {
-		return ufs;
+	public List<Contato> getContatos() {
+		return contatos;
 	}
 
-	public void setUfs(List<String> ufs) {
-		this.ufs = ufs;
+	public void setContatos(List<Contato> contatos) {
+		this.contatos = contatos;
 	}
 
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<ui:composition template="template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="conteudo">
+		<h:form id="formContato">
+			<p:growl autoUpdate="true" />
+			<p:panel id="panelContato" header="Contato">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Rua:" for="rua" />
+					<p:inputText id="rua" value="#{contatoController.contato.rua}"
+						required="true" requiredMessage="Campo rua obrigatório" />
+
+					<p:outputLabel value="Número" for="numero" />
+					<p:inputNumber id="numero"
+						value="#{contatoController.contato.numero}" required="true"
+						requiredMessage="Campo numero obrigatório" />
+
+					<p:outputLabel value="Bairro:" for="bairro" />
+					<p:inputText id="bairro"
+						value="#{contatoController.contato.bairro}" required="true"
+						requiredMessage="Campo bairro obrigatório" />
+
+					<p:outputLabel value="Cidade:" for="cidade" />
+					<p:inputText id="cidade"
+						value="#{contatoController.contato.cidade}" required="true"
+						requiredMessage="Campo cidade obrigatório" />
+
+					<p:outputLabel value="UF" for="uf" />
+					<p:selectOneMenu id="uf" value="#{contatoController.contato.uf}">
+						<f:selectItem itemLabel="Selecione uma UF" />
+						<f:selectItems value="#{contatoController.ufs}" var="uf"
+							itemValue="#{uf}" itemLabel="#{uf}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="E-mail" for="email" />
+					<p:inputText id="email" value="#{contatoController.contato.email}"
+						required="true" requiredMessage="Campo E-mail obrigatório" />
+
+					<p:outputLabel value="Telefone:" for="telefone" />
+					<p:inputText id="telefone"
+						value="#{contatoController.contato.telefone}" required="true"
+						requiredMessage="Campo telefone obrigatório" />
+
+					<p:commandButton value="Salvar"
+						styleClass="btn-block btn-success btn-flat"
+						actionListener="#{contatoController.salvar}"
+						update="formTableContato formContato" />
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+
+		<h:form id="formTableContato">
+			<p:dataTable value="#{contatoController.contatos}" var="contato"
+				emptyMessage="Foram encontrados 0 registros" reflow="true"
+				paginator="true" rows="10">
+
+				<p:column headerText="Código" sortBy="#{contato.idContato}">
+					<p:outputLabel value="#{contato.idContato}" />
+				</p:column>
+
+				<p:column headerText="Rua" sortBy="#{contato.rua}">
+					<p:outputLabel value="#{contato.rua}" />
+				</p:column>
+
+				<p:column headerText="Número">
+					<p:outputLabel value="#{contato.numero}" />
+				</p:column>
+
+				<p:column headerText="Bairro">
+					<p:outputLabel value="#{contato.bairro}" />
+				</p:column>
+
+				<p:column headerText="Cidade">
+					<p:outputLabel value="#{contato.cidade}" />
+				</p:column>
+
+				<p:column headerText="Uf">
+					<p:outputLabel value="#{contato.uf}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<p:outputLabel value="#{contato.email}" />
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<p:outputLabel value="#{contato.telefone}" />
+				</p:column>
+
+				<p:column headerText="Número">
+					<p:outputLabel value="#{contato.numero}" />
+				</p:column>
+
+				<p:column headerText="Ações">
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{contatoController.editar}"
+						update="formTableContato">
+						<f:attribute name="contatoSelecionado" value="#{contato}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{contatoController.excluir}"
+						update="formTableContato">
+
+						<p:confirm header="Confirmação" message="Excluir Contato?"
+							icon="ui-icon-alert" />
+						<f:attribute name="contatoExcluido" value="#{contato}" />
+					</p:commandButton>
+
+				</p:column>
+
+				<f:facet name="footer">
+					<p:outputLabel
+						value="Foram encontrados #{contatoController.contatos.size()} registros." />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

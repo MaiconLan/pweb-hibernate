@@ -77,7 +77,7 @@ public class GenericDAO<T> {
 	/**
 	 * @property Procurar registros pelo ID
 	 */
-	public T findById(Long id) throws NullPointerException, Exception {
+	public T findById(Long id) {
 		return em.find(clazz, id);
 	}
 
@@ -85,7 +85,7 @@ public class GenericDAO<T> {
 	 * @property Lista registros
 	 */
 	@SuppressWarnings("unchecked")
-	public List<T> list() throws NullPointerException, Exception {
+	public List<T> list() {
 		Query query = em.createQuery("FROM " + clazz.getSimpleName());
 		return query.setMaxResults(100).getResultList();
 	}
@@ -93,7 +93,7 @@ public class GenericDAO<T> {
 	/**
 	 * @property Remove registros por ID
 	 */
-	public void remove(Long id) throws NullPointerException, Exception {
+	public void remove(Long id) {
 		T t = findById(id);
 		try {
 			em.getTransaction().begin();
