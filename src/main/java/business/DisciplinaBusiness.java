@@ -26,5 +26,9 @@ public class DisciplinaBusiness {
 
 		return null;
 	}
+	
+	public void excluir(Disciplina disciplina) {
+		disciplinaDAO.remove(disciplina.getIdDisciplina());
+	}
 
 }

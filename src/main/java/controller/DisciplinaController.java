@@ -35,7 +35,7 @@ public class DisciplinaController implements Serializable {
 	}
 
 	public void excluir(ActionEvent event) {
-		disciplinas.remove((Disciplina) event.getComponent().getAttributes().get("disciplinaExcluidoa"));
+		disciplinaBusiness.excluir((Disciplina) event.getComponent().getAttributes().get("disciplinaExcluida"));
 		recarregarDisciplinas();
 	}
 

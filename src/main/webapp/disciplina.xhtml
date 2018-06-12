@@ -54,7 +54,7 @@
 						update="formTableDisciplina">
 
 						<p:confirm header="Confirmação" message="Excluir Disciplina?"
-							icon="ui-icon-alert" />
+							icon="ui-icon-alert"/>
 						<f:attribute name="disciplinaExcluida" value="#{disciplina}" />
 					</p:commandButton>
 
@@ -65,6 +65,18 @@
 						value="Foram encontrados #{disciplinaController.disciplinas.size()} registros." />
 				</f:facet>
 			</p:dataTable>
+		</h:form>
+		
+		<h:form id="modalExcluir">
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				severity="alert">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes btn-block btn-success btn-flat"
+					icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no btn-block btn-warning btn-flat"
+					icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,12 +1,15 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,9 @@ public class Disciplina implements Serializable {
 	private String nome;
 
 	private String semestre;
+
+	@OneToMany(mappedBy = "disciplina", cascade = CascadeType.ALL)
+	private List<Matricula> matriculas;
 
 	public Long getIdDisciplina() {
 		return idDisciplina;
@@ -71,6 +77,11 @@ public class Disciplina implements Serializable {
 		} else if (!idDisciplina.equals(other.idDisciplina))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return nome + " / " + semestre;
 	}
 
 }

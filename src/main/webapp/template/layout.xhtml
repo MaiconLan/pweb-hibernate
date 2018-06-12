@@ -28,15 +28,20 @@
 		<p:layoutUnit position="west" resizable="true">
 
 			<h:form>
-				<p:slideMenu styleClass="menu" backLabel="Voltar">
-					<p:submenu label="Cadastros" icon="fa fa-fw fa-edit">
+				<p:slideMenu styleClass="menu" backLabel="Voltar" >
+					<p:submenu label="Cadastros" icon="fa fa-fw fa-edit"
+						styleClass="menu">
 						<p:menuitem value="Aluno" icon="fa fa-fw fas fa-user"
 							url="/aluno.xhtml" />
+							
 						<p:menuitem value="Disciplina" url="/disciplina.xhtml"
-							icon="fa fa-fw far fa-id-card" />
+							icon="fa fa-fw far fa-book" />
 
 						<p:menuitem value="Contato" url="/contato.xhtml"
 							icon="fa fa-fw far fa-id-card" />
+							
+						<p:menuitem value="Matrícula" url="/matricula.xhtml"
+							icon="fa fa-fw far fa-cart-plus" />
 					</p:submenu>
 				</p:slideMenu>
 			</h:form>

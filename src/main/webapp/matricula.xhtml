@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<ui:composition template="template/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="conteudo">
+		<h:form id="formMatricula">
+			<p:growl autoUpdate="true" />
+
+			<p:panel id="panelMatricula" header="Matricular">
+				<p:panelGrid columns="2">
+					<p:outputLabel for="disciplina" value="Disciplina" />
+					<p:selectOneMenu id="disciplina"
+					converter="disciplinaConverter"
+						value="#{matriculaController.matricula.disciplina}">
+						<f:selectItem itemLabel="Selecione uma Disciplina" />
+						<f:selectItems value="#{matriculaController.disciplinas}"
+							var="disciplina" itemValue="#{disciplina}"
+							itemLabel="#{disciplina}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="aluno" value="Aluno" />
+					<p:selectOneMenu id="aluno"
+						converter="alunoConverter"
+						value="#{matriculaController.matricula.aluno}">
+						<f:selectItem itemLabel="Selecione um Aluno" />
+						<f:selectItems value="#{matriculaController.alunos}" var="aluno"
+							itemValue="#{aluno}" itemLabel="#{aluno}" />
+					</p:selectOneMenu>
+
+					<p:commandButton value="Salvar"
+						styleClass="btn-block btn-success btn-flat"
+						actionListener="#{matriculaController.salvar}"
+						update="formTableMatricula formMatricula" />
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+
+		<h:form id="formTableMatricula">
+			<p:panel id="panelMatriculas" header="Matrículas Realizadas">
+				<p:panelGrid columns="2">
+					<p:dataTable value="#{matriculaController.matriculas}"
+						var="matricula" emptyMessage="Foram encontrados 0 registros"
+						reflow="true" paginator="true" rows="10">
+
+						<p:column headerText="Código" sortBy="#{matricula.idMatricula}">
+							<p:outputLabel value="#{matricula.idMatricula}" />
+						</p:column>
+
+						<p:column headerText="Disciplina" sortBy="#{matricula.disciplina}">
+							<p:outputLabel value="#{matricula.disciplina}" />
+						</p:column>
+
+						<p:column headerText="Aluno" sortBy="#{matricula.aluno}">
+							<p:outputLabel value="#{matricula.aluno}" />
+						</p:column>
+
+						<f:facet name="footer">
+							<p:outputLabel
+								value="Foram encontrados #{matriculaController.alunos.size()} registros." />
+						</f:facet>
+					</p:dataTable>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
